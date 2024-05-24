@@ -177,7 +177,9 @@ class Plotconfig:
                     data["Record"].append(record)
                     data["Variants"].append(record.INFO)
                     svtype, copynumber = self.get_copynumber_type(record)
-                    svtype = svtype.upper()
+                    #svtype = svtype.upper()
+                    print("color options: ", self.options["Color"])
+                    print("sv type: ", svtype)
                     assert svtype in self.options["Color"], (
                         "Wrong svtype in record "
                         + ", ".join(
@@ -190,7 +192,7 @@ class Plotconfig:
                         )
                         + " check your vcf Exit"
                     )
-                    assert isinstance(copynumber, int), "ERROR wrong copy number"
+                    #assert isinstance(copynumber, int), "ERROR wrong copy number"
                     data["Variants_type"].append(svtype)
                     try:
                         data["Color"].append(self.colors[svtype])
@@ -199,8 +201,8 @@ class Plotconfig:
                     if copynumber is None:
                         data["CopyNumber"].append(2)
                     else:
-                        if copynumber > 5 and svtype not in ["SNV", "INDEL", "OTHER"]:
-                            copynumber = 5
+                        #if copynumber > 5 and svtype not in ["SNV", "INDEL", "OTHER"]:
+                        #    copynumber = 5
                         data["CopyNumber"].append(copynumber)
             assert_values_same_length(data)
             # if record.POS == 31490262:
@@ -308,6 +310,32 @@ class Plotconfig:
         # list of sample TODO working only if vcf monosample
         else:
             # Need verificatons TODO
+
+            if svtype == "DEL":
+                return 1
+            elif svtype == "DUP":
+                return 2
+            elif svtype == "INV":
+                return 3
+            elif svtype == "INVdup" or svtype == "dupINV":
+                return 4
+            elif svtype == "INVdel":
+                return 5
+            elif svtype == "delINV":
+                return 6
+            elif svtype == "delINVdel":
+                return 7
+            elif svtype == "dupINVdel":
+                return 7
+            elif svtype == "dupINVdup":
+                return 7
+            elif svtype == "dDUP":
+                return 2
+            elif svtype == "INV_dDUP":
+                return 3
+            elif svtype == "TRA":
+                return 4
+
             genotype = record.samples[0].data.GT
             if genotype == "1/0" or "0/1":
                 gt = 1
@@ -316,16 +344,16 @@ class Plotconfig:
             else:
                 gt = "0/0"
 
-            if svtype in [
-                "CNV",
-                "INS",
-                # "INV",
-                # "DEL",
-                "DUP",
-            ]:
-                # CNV or INS
-                return gt + 1
-            elif svtype == "INV":
+            #if svtype in [
+            #    "CNV",
+            #    "INS",
+            #    # "INV",
+            #    # "DEL",
+            #    "DUP",
+            #]:
+            #    # CNV or INS
+            #    return gt + 1
+            if svtype == "INV":
                 return 2
             elif svtype == "DEL":
                 return 2 - gt

@@ -133,10 +133,12 @@ def main():
         print("[ERROR] input format not supported")
 
     fig = fig_instance.fig()
+
     fig["layout"]["showlegend"] = True
     fig.update_layout(legend_title="Legend")
     fig.update_layout(legend_xanchor="right")
     fig.update_layout(legend_x=1.1)
+
     # Order of the legend test
     dico = defaultdict(
         int,
@@ -150,8 +152,16 @@ def main():
                 "DUP": 5,
                 "INS": 6,
                 "INV": 7,
-                "BND": 8,
-                "SNV": 9,
+                "INVdel": 8,
+                "INVdup": 9,
+                "delINV": 10,
+                "delINVdel": 11,
+                "dupINV": 12,
+                "dupINVdup": 13,
+                "dupINVdel": 14,
+                "TRA": 15,
+                "BND": 16,
+                "SNV": 17
             }.items()
         },
     )
@@ -159,6 +169,7 @@ def main():
         if scatter.showlegend is None and hasattr(scatter, "name"):
             if scatter.name is not None:
                 scatter.legendrank = dico[scatter.name]
+
     try:
         if not output_format:
             plot(fig)

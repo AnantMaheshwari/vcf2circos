@@ -5,7 +5,7 @@
 		"height": 1000,
 		"plot_bgcolor": "white"
 	},
-	"Static": "/home1/BAS/lamouchj/config_vcf2circos_09012023/Static",
+	"Static": "/Users/amaheshw/Documents/Cue/ComplexCue/code/vcf2circos/Static/",
 	"Assembly": "hg19",
 	"Chromosomes": {
 		"list": [],
